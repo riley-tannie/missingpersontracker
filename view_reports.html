@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Reports</title>
+    <link rel="stylesheet" href="css/viewer.css">
+</head>
+<body>
+    <h1>Your Reports</h1>
+    
+    <div id="reports">
+        <!-- The report data will be inserted here by JavaScript -->
+    </div>
+
+    <script>
+        // Fetch the reports data from the server when the page loads
+        window.onload = function() {
+            fetch('php/view_reports.php')
+                .then(response => {
+                    // If the response is not okay, throw an error
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json(); // Parse the JSON response
+                })
+                .then(data => {
+                    console.log('Fetched data:', data); // Debugging log
+                    const reportsDiv = document.getElementById('reports');
+
+                    // Check if the response contains an error
+                    if (data.error) {
+                        reportsDiv.innerHTML = `<p>Error: ${data.error}</p>`;
+                    } else if (data.length === 0) {
+                        // If no reports are available
+                        reportsDiv.innerHTML = '<p>You have not submitted any reports yet.</p>';
+                    } else {
+                        // Loop through each report and create an HTML structure for it
+                        data.forEach(report => {
+                            const reportHtml = `
+                                <div class="report">
+                                    <h2>Report ID: ${report.report_id}</h2>
+                                    <p><strong>Case Details:</strong> ${report.case_details}</p>
+                                    <p><strong>Location:</strong> ${report.location}</p>
+                                    <p><strong>Report Date:</strong> ${report.report_date}</p>
+                                    <p class="statuscolor"><strong>Status:</strong> ${report.status}</p>
+                                </div>
+                            `;
+                            reportsDiv.innerHTML += reportHtml;
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching report data:', error);
+                    document.getElementById('reports').innerHTML = '<p>Failed to load reports. Please try again later.</p>';
+                });
+        };
+    </script>
+</body>
+</html>
+
+

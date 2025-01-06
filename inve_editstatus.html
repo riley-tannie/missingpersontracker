@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Report Status</title>
+    <link rel="stylesheet" href="css/inves_editstatus.css">
+</head>
+<body>
+    <div class="form-container">
+        <header>
+            <h1>Edit Report Status</h1>
+        </header>
+
+        <main>
+            <form id="editStatusForm" action="php/inves_editstatus.php" method="POST">
+                <input type="hidden" id="report_id" name="report_id">
+
+                <label for="case_details">Case Details:</label>
+                <textarea id="case_details" name="case_details" rows="4" required readonly></textarea><br>
+
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" required readonly><br>
+
+                <label for="report_date">Report Date:</label>
+                <input type="text" id="report_date" name="report_date" readonly><br>
+
+                <label for="status">Status:</label>
+                <select id="status" name="status" required>
+                    <option value="Submitted">Submitted</option>
+                    <option value="Under Investigation">Under Investigation</option>
+                    <option value="Resolved">Resolved</option>
+                    <option value="Closed">Closed</option>
+                </select><br>
+
+                <button type="submit">Update Status</button>
+            </form>
+        </main>
+    </div>
+
+    <script>
+        // Get the report_id from the URL query string
+        const urlParams = new URLSearchParams(window.location.search);
+        const report_id = urlParams.get('report_id');
+
+        if (report_id) {
+            // Fetch the report data from the server
+            fetch(`php/inves_editstatus.php?report_id=${report_id}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        // Fill the form with the data
+                        document.getElementById('report_id').value = data.report_id;
+                        document.getElementById('case_details').value = data.case_details;
+                        document.getElementById('location').value = data.location;
+                        document.getElementById('report_date').value = data.report_date;
+                        document.getElementById('status').value = data.status;
+                    } else {
+                        alert("Report not found.");
+                    }
+                })
+                .catch(error => console.log("Error fetching report data: ", error));
+        } else {
+            alert("Invalid report ID.");
+        }
+    </script>
+</body>
+</html>
+
+
+

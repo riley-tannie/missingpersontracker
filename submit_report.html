@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Submission</title>
+    <link rel="stylesheet" href="css/report.css">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Submit a Missing Report</h1>
+
+        <form id="submitReportForm" action="php/submit_report.php" method="POST">
+            <label for="username">Reporter Name:</label>
+            <input type="text" id="username" name="username" readonly><br>
+
+            <label for="phone_number">Phone Number:</label>
+            <input type="text" id="phone_number" name="phone_number" required><br>
+
+            <label for="case_details">Case Details:</label>
+            <textarea id="case_details" name="case_details" rows="4" required></textarea><br>
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required><br>
+
+            <button type="submit">Submit Report</button>
+        </form>
+
+        <div id="responseMessage" style="display:none; margin-top: 20px; padding: 10px; border-radius: 5px;"></div>
+    </div>
+
+    <script>
+        function fetchReporterName() {
+            // Fetch user info to get the username from the session
+            fetch('php/get_user_info.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.username) {
+                        // Set the username in the form input
+                        document.getElementById('username').value = data.username;
+                    } else {
+                        alert('User not logged in.');
+                        window.location.href = 'login.html'; // Redirect to login page if user is not logged in
+                    }
+                })
+                .catch(error => console.error('Error fetching user info:', error));
+        }
+
+        window.onload = fetchReporterName;
+
+        // Handle form submission
+        const form = document.getElementById('submitReportForm');
+        form.onsubmit = function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(form); // Create FormData object from the form
+
+            fetch('php/submit_report.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json()) // Parse the response as JSON
+            .then(data => {
+                const responseMessageElement = document.getElementById('responseMessage');
+                
+                if (data.success) {
+                    // Show success message
+                    responseMessageElement.innerHTML = `<span style="color: green;">${data.message}</span>`;
+                    responseMessageElement.style.display = 'block';
+
+                    // Redirect after 3 seconds
+                    setTimeout(() => {
+                        window.location.href = 'index.html'; 
+                    }, 3000); 
+                } else {
+                    // Show error message
+                    responseMessageElement.innerHTML = `<span style="color: red;">${data.message}</span>`;
+                    responseMessageElement.style.display = 'block';
+                }
+
+                form.style.display = 'none'; // Hide the form after submission
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const responseMessageElement = document.getElementById('responseMessage');
+                responseMessageElement.innerHTML = `<span style="color: red;">An error occurred. Please try again later.</span>`;
+                responseMessageElement.style.display = 'block';
+            });
+        };
+    </script>
+</body>
+</html>

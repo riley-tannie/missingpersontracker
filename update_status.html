@@ -1,0 +1,69 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Investigation Status</title>
+    <link rel="stylesheet" href="css/status.css">
+</head>
+<body>
+    <div class="form-container">
+    <h1>Update or Modify Investigation Status</h1>
+    <form id="updateForm">
+        <label for="report_id">Report ID:</label>
+        <input type="number" name="report_id" id="report_id" required placeholder="Enter Report ID">
+
+        <label for="status">New Status:</label>
+        <select name="status" id="status" required>
+            <option value="">Select Status</option>
+            <option value="Submitted">Submitted</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Resolved">Resolved</option>
+            <option value="Modified">Modified</option>
+        </select>
+
+        <label for="update_text">Update Details:</label>
+        <textarea name="update_text" id="update_text" placeholder="Provide update details..." required></textarea>
+
+        <input type="hidden" name="user_id" id="user_id" value="1"> 
+
+        <button type="submit">Submit Update</button>
+    </form>
+    </div>
+
+    <script>
+        document.getElementById('updateForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+
+            const reportId = document.getElementById('report_id').value;
+            const status = document.getElementById('status').value;
+            const updateText = document.getElementById('update_text').value;
+            const userId = document.getElementById('user_id').value;
+
+            
+            const formData = new FormData();
+            formData.append('report_id', reportId);
+            formData.append('status', status);
+            formData.append('update_text', updateText);
+            formData.append('user_id', userId);
+
+            
+            fetch('php/update_status.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())  
+            .then(data => {
+                if (data.success) {
+                    alert('Investigation status updated successfully!');
+                    window.location.href = 'index.html'; 
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again later.');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fff5d7;
+}
+
+/* Overlay for buttons */
+.overlay-buttons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    text-align: center;
+}
+
+h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Navigation Styling for Buttons */
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    margin: 15px;
+}
+
+.nav-button {
+    background-color: #7c677f; /* Blue button with transparency */
+    color: white;
+    padding: 20px 40px;
+    border: none;
+    border-radius: 30px; /* Rounded edges for a more modern look */
+    cursor: pointer;
+    font-size: 18px;
+    text-transform: uppercase; /* Make button text all caps */
+    letter-spacing: 2px; /* Spacing between letters for visual impact */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.form-button:hover {
+    background-color: #5a4657; /* Optional hover effect */
+}
+
+
+.nav-button a {
+    color: white;
+    text-decoration: none; /* Remove underline */
+    font-weight: bold;
+}
+
+.nav-button:hover {
+    background-color: #7c677f; /* Darker blue on hover */
+    transform: translateY(-5px); /* Lift the button slightly on hover */
+}
+
+.nav-button:focus {
+    outline: none;
+}
+
+/* Optional Styling for the Links Inside the Button */
+.nav-button a {
+    color: white;
+    text-decoration: none; /* Remove underline from links */
+}
+
+/* Add responsive design for mobile */
+@media screen and (max-width: 768px) {
+    .overlay-buttons {
+        top: 40%; /* Adjust positioning for smaller screens */
+    }
+    h1 {
+        font-size: 28px;
+    }
+    .nav-button {
+        padding: 15px 30px; /* Adjust padding for smaller screens */
+        font-size: 16px;
+    }
+}
+
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

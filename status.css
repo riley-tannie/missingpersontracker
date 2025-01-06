@@ -1,0 +1,115 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Body Styling */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;      /* Center horizontally */
+    justify-content: center;  /* Center vertically */
+    height: 100vh;            /* Full viewport height */
+    background-color: #fff5d7; /* Background color */
+    padding: 20px;
+}
+
+.form-container {
+    background-color: #c4f1c6;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 600px; /* Limit the width */
+    text-align: center; /* Center text inside the form */
+}
+
+
+/* Centered Heading */
+h1 {
+    color: #333;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 40px; /* Space below the heading */
+}
+
+/* Form Container Styles */
+.form-container {
+    background-color: #f9c5bd;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 600px;
+    text-align: center;  /* Center all text inside the form */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Form Layout */
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center form elements horizontally */
+}
+
+/* Input, Select, and Textarea Styles */
+textarea, input[type="number"], select {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center; /* Center text inside the input fields */
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
+}
+
+/* Focus State */
+textarea:focus, input[type="number"]:focus, select:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+/* Button Styling */
+button {
+    background-color: #7c677f;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 30px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 768px) {
+    .form-container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    textarea, input[type="number"], select {
+        font-size: 14px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 12px 20px;
+    }
+}
